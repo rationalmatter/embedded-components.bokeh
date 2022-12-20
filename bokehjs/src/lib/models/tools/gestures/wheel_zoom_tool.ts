@@ -9,15 +9,26 @@ import {tool_icon_wheel_zoom} from "styles/icons.css"
 export class WheelZoomToolView extends GestureToolView {
   model: WheelZoomTool
 
+  // Remember current pinch scale
+  last_pinch_scale: number = 1
+
+  _pinch_start(_ev: PinchEvent): void {
+    // Reset current pinch scale
+    this.last_pinch_scale = 1
+  }
+
   _pinch(ev: PinchEvent): void {
     // TODO (bev) this can probably be done much better
     const {sx, sy, scale, ctrlKey, shiftKey} = ev
 
     let delta: number
-    if (scale >= 1)
-      delta = (scale - 1) * 20.0
-    else
-      delta = -20.0/scale
+    // if (scale >= 1)
+    //   delta = (scale - 1) * 20.0
+    // else
+    //   delta = -20.0/scale
+    // To calculate pinch scale correctly, we need to store current state (at least judging by the WebKit behaviour on iOS)
+    delta = (scale / this.last_pinch_scale - 1) / this.model.speed
+    this.last_pinch_scale = scale
 
     this._scroll({type: "wheel", sx, sy, delta, ctrlKey, shiftKey})
   }

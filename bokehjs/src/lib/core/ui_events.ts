@@ -563,7 +563,25 @@ export class UIEventBus implements EventListenerObject {
   }
 
   /*private*/ _get_sxy(event: TouchEvent | MouseEvent | PointerEvent): ScreenCoord {
-    const {pageX, pageY} = is_touch(event) ? (event.touches.length != 0 ? event.touches : event.changedTouches)[0] : event
+    // const {pageX, pageY} = is_touch(event) ? (event.touches.length != 0 ? event.touches : event.changedTouches)[0] : event
+    // Fixes calculation of the central point for pinch gesture (at least for WebKit on iOS)
+    var pageX = 0
+    var pageY = 0
+    if (is_touch(event)) {
+      const touches = event.touches.length != 0 ? event.touches : event.changedTouches
+      if (touches.length > 1) {
+        pageX = Math.floor((touches[0].pageX + touches[1].pageX) / 2)
+        pageY = Math.floor((touches[0].pageY + touches[1].pageY) / 2)
+      }
+      else {
+        pageX = touches[0].pageX
+        pageY = touches[0].pageY
+      }
+    }
+    else {
+      pageX = event.pageX
+      pageY = event.pageY
+    }
     const {left, top} = offset(this.hit_area)
     return {
       sx: pageX - left,
