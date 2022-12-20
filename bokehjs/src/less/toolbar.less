@@ -1,10 +1,10 @@
 @import "./_mixins.less";
 
 .bk-root {
-  @toolbarSize: 30px;
+  @toolbarSize: 44px;
 
-  @buttonHeight: 30px;
-  @buttonWidth: 30px;
+  @buttonHeight: 44px;
+  @buttonWidth: 44px;
   @buttonColor: lightgray;
 
   .bk-toolbar-hidden {
@@ -62,15 +62,11 @@
 
     cursor: pointer;
 
-    background-size: 60% 60%;
+    background-size: 50% 50%;
     background-origin: border-box;
     background-color: transparent;
     background-repeat: no-repeat;
     background-position: center center;
-
-    &:hover {
-      background-color: rgba(192, 192, 192, 0.15);
-    }
 
     &:focus {
       outline: none;
@@ -115,7 +111,7 @@
 
   .bk-toolbar.bk-above, .bk-toolbar.bk-below {
     .bk-button-bar + .bk-button-bar:before {
-      height: 10px;
+      height: 15px;
       width: 1px;
     }
   }
@@ -123,7 +119,7 @@
   .bk-toolbar.bk-left, .bk-toolbar.bk-right {
     .bk-button-bar + .bk-button-bar:before {
       height: 1px;
-      width: 10px;
+      width: 15px;
     }
   }
 }
