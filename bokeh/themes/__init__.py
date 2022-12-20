@@ -142,7 +142,15 @@ DARK_MINIMAL  = 'dark_minimal'
 NIGHT_SKY  = 'night_sky'
 CONTRAST  = 'contrast'
 
-default = Theme(json={})
+try:
+    # If we are in the embedded Juno environment, choose theme based on iOS system UI style (light/dark)
+    import junoapp
+    if junoapp.is_dark_mode_enabled():
+        default = Theme(json=_dark_minimal.json)
+    else:
+        default = Theme(json={})
+except ImportError:
+    default = Theme(json={})
 
 built_in_themes = {
     CALIBER       : Theme(json=_caliber.json),
