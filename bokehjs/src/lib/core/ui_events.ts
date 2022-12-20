@@ -145,6 +145,8 @@ export class UIEventBus implements EventListenerObject {
     this.hit_area.addEventListener("mouseleave", (e) => this._mouse_exit(e))
     this.hit_area.addEventListener("contextmenu", (e) => this._context_menu(e))
     this.hit_area.addEventListener("wheel", (e) => this._mouse_wheel(e))
+    this.hit_area.addEventListener("touchstart", (_e) => (window as any).webkit.messageHandlers.bokeh_plot_touchstart.postMessage(''))
+    this.hit_area.addEventListener("touchend", (_e) => (window as any).webkit.messageHandlers.bokeh_plot_touchend.postMessage(''))
 
     // But we MUST remove listeners registered on document or we'll leak memory: register
     // 'this' as the listener (it implements the event listener interface, i.e. handleEvent)
